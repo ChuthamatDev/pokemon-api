@@ -42,11 +42,12 @@ let PokemonService = class PokemonService {
                 types: data.types.map((t) => t.type.name),
                 weight: data.weight,
                 abilities: data.abilities.map((a) => a.ability.name),
+                image: data.sprites?.other?.['official-artwork']?.front_default || '',
             };
             await this.cacheManager.set(cacheKey, formattedData, 600000);
             return formattedData;
         }
-        catch (error) {
+        catch {
             throw new common_1.NotFoundException(`Pokemon with name or ID '${name}' not found`);
         }
     }
@@ -56,6 +57,10 @@ let PokemonService = class PokemonService {
             name: pokemon.name,
             abilities: pokemon.abilities,
         };
+    }
+    async getRandomPokemon() {
+        const randomId = Math.floor(Math.random() * 1000) + 1;
+        return this.getPokemonByName(randomId.toString());
     }
 };
 exports.PokemonService = PokemonService;

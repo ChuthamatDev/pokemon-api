@@ -5,6 +5,7 @@ export interface PokemonResponse {
     types: string[];
     weight: number;
     abilities: string[];
+    image: string;
 }
 export interface PokemonAbilityResponse {
     name: string;
@@ -16,4 +17,5 @@ export declare class PokemonService {
     constructor(httpService: HttpService, cacheManager: Cache);
     getPokemonByName(name: string): Promise<PokemonResponse>;
     getPokemonAbility(name: string): Promise<PokemonAbilityResponse>;
+    getRandomPokemon(): Promise<PokemonResponse>;
 }

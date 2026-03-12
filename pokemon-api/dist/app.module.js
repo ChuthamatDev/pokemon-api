@@ -46,7 +46,7 @@ exports.AppModule = AppModule = __decorate([
                 }),
             }),
             users_module_1.UsersModule,
-            pokemon_module_1.PokemonModule
+            pokemon_module_1.PokemonModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

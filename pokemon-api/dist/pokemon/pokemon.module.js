@@ -17,10 +17,11 @@ let PokemonModule = class PokemonModule {
 exports.PokemonModule = PokemonModule;
 exports.PokemonModule = PokemonModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule,
+        imports: [
+            axios_1.HttpModule,
             cache_manager_1.CacheModule.register({
                 ttl: 600000,
-            })
+            }),
         ],
         providers: [pokemon_service_1.PokemonService],
         controllers: [pokemon_controller_1.PokemonController],

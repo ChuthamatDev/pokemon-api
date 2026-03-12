@@ -2,15 +2,15 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeor
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-  @Column({ unique: true })
-  username!: string;
+    @Column({ unique: true })
+    username!: string;
 
-  @Column()
-  password!: string;
+    @Column()
+    password!: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt!: Date;
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt!: Date;
 }
