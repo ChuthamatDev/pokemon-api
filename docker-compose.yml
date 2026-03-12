@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  # 1. ฐานข้อมูล PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: pokemon_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Chuthamat@2545
+      POSTGRES_DB: pokemon_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # 2. Backend (NestJS)
+  backend:
+    build:
+      context: ./pokemon-api
+      dockerfile: Dockerfile
+    container_name: pokemon_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Chuthamat@2545
+      - POSTGRES_DATABASE=pokemon_db
+      - JWT_SECRET=INTERVIEW_TEST_POKEMON_2026
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # 3. Frontend (React + Vite)
+  frontend:
+    build:
+      context: ./pokemon-fe
+      dockerfile: Dockerfile
+    container_name: pokemon_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      # ส่ง URL ของ Backend ไปให้ Frontend ใช้
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
