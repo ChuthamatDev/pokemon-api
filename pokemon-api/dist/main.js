@@ -5,10 +5,13 @@ const app_module_1 = require("./app.module");
 const http_exception_filter_1 = require("./common/http-exception.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors({
+        origin: 'http://localhost:5173',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    });
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter());
-    await app.listen(process.env.PORT ?? 3000);
+    await app.listen(3000);
 }
-bootstrap().catch((err) => {
-    console.error('Error starting server:', err);
-});
+void bootstrap();
 //# sourceMappingURL=main.js.map
