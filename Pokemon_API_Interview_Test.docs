@@ -1,0 +1,181 @@
+{
+  "info": {
+    "_postman_id": "af62a06b-ae7e-45a0-b779-3b0f64ffaba8",
+    "name": "Pokemon API - Interview Test Copy",
+    "description": "API Documentation for the Full-stack Developer Interview Test. Includes Authentication and Pokemon endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52837807"
+  },
+  "item": [
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"ash_ketchum\",\n    \"password\": \"pikachu123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "register"
+              ]
+            },
+            "description": "ใช้สมัครลงทะเบียน เข้าใช้งานระบบ"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"jwt_token\", jsonData.access_token);",
+                  "    console.log(\"Token saved automatically!\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"ash_ketchum\",\n    \"password\": \"pikachu123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "description": "ใช้เข้าสู่ระบบ"
+          },
+          "response": []
+        }
+      ],
+      "description": "ใช้สำหรับยืนยันตัวตนก่อนจะเข้าสู่ระบบ pokemon"
+    },
+    {
+      "name": "2. Pokemon",
+      "item": [
+        {
+          "name": "Get Pokemon by Name",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pokemon/pikachu",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "pikachu"
+              ]
+            },
+            "description": "ใช้ดึงข้อมูลของ pokemon ตามชื่อ"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pokemon Ability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pokemon/pikachu/ability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "pikachu",
+                "ability"
+              ]
+            },
+            "description": "ใช้สำหรับึงข้อมูล pokemon ตามชื่อและดึงข้อมูล abilability"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Random Pokemon",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pokemon/random",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "random"
+              ]
+            },
+            "description": "ใช้สำหรับสุ่ม pokemon"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
